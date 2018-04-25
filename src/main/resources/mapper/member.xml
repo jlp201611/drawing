@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.mingyeong.member.mapper.IMemberMapper"><!--다오에서 네임 스페이스를 통해서 member.xml로 찾아온다-->
+	
+	<!-- 서치 -->
+
+	
+	<!-- 페이징 -->
+	<select id="getMemberCount" parameterType="memberSearch" resultType="int">
+		SELECT count(*)
+		FROM tb_lmk_member
+		<if test="searchWord != null and searchWord !=''">
+				WHERE mem_id LIKE '%' || #{searchWord} || '%'
+		</if>		
+	</select>
+	
+	<!-- 리스트 -->
+	<select id="getMemberList" resultType="member" parameterType="memberSearch">
+		<include refid="common.prePaging" />
+		SELECT
+		    mem_id,
+		    mem_name,
+		    mem_pwd,
+		    mem_phone,
+		    mem_email,
+		    to_char(reg_date, 'YYYY/MM/DD') as reg_date,
+		    to_char(access_date, 'YYYY/MM/DD') as access_date
+		FROM
+		    tb_lmk_member
+		WHERE mem_id != 'admin'
+			<if test="searchWord != null and searchWord !=''">
+					and (mem_id LIKE '%' || #{searchWord} || '%')
+			</if>
+		ORDER BY 
+			mem_id
+		<include refid="common.postPaging" />    
+	</select>
+	
+	<!-- 로그인 -->
+	<select id="login" parameterType="member" resultType="member">
+		SELECT
+		    mem_id,
+		    mem_name,
+		    mem_phone,
+		    mem_email,
+		    to_char(reg_date, 'YYYY/MM/DD') as reg_date,
+		    to_char(access_date, 'YYYY/MM/DD') as access_date
+		FROM
+		    tb_lmk_member
+		WHERE  mem_id = #{mem_id}
+		  AND  mem_pwd = #{mem_pwd}
+	</select>
+	<!-- 최근접속일 -->
+	<update id="loginAccess">
+		UPDATE tb_lmk_member
+		   SET access_date = sysdate
+		 WHERE mem_id = #{mem_id}
+	</update>
+
+	<!-- 회원상세 -->
+	<select id="getMember" parameterType="member" resultType="member">
+		SELECT
+		    mem_id,
+		    mem_name,
+		    mem_pwd,
+		    mem_phone,
+		    mem_email,
+		    to_char(reg_date, 'YYYY/MM/DD') as reg_date,
+		    to_char(access_date, 'YYYY/MM/DD') as access_date
+		FROM
+		    tb_lmk_member
+		WHERE
+			mem_id = #{mem_id}		
+	
+	</select>
+	<!-- 관리자 회원 삭제 -->
+	<delete id="adminDelete" parameterType="member">
+		DELETE FROM
+			tb_lmk_member
+		WHERE
+			mem_id =#{mem_id}
+		and
+			(select mem_pwd from tb_lmk_member where mem_id='admin')=#{mem_pwd}		
+	</delete>	
+	
+	<!-- 회원가입 -->
+	<insert id="insertMember" parameterType="member">
+		INSERT INTO tb_lmk_member (
+		    mem_id,
+		    mem_name,
+		    mem_pwd,
+		    mem_phone,
+		    mem_email,
+		    reg_date
+		) VALUES (
+		    #{mem_id},
+		    #{mem_name},
+		    #{mem_pwd},
+		    #{mem_phone},
+		    #{mem_email},
+		    sysdate
+		)	
+	
+	</insert>
+</mapper>
+

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!-- @컴포넌트를 쓴놈들 빈으로 등록, 단 @Controller를 제외 -->            
+	<context:component-scan base-package="kr.co.mingyeong">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/><!-- 컨트롤러를 제외한다는 뜻 -->
+	</context:component-scan>
+
+	<util:properties id="app" location="classpath:db.properties" />
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="#{app['db.driver']}"/>
+		<property name="url" value="#{app['db.url']}"/>
+		<property name="username" value="#{app['db.username']}"/>
+		<property name="password" value="#{app['db.password']}"/>
+		<property name="maxTotal" value="5"/>
+		<property name="minIdle" value="5"/>
+	</bean>
+	
+	<!-- 필수는 아니지만 트렌젝션은 스프링으로 쓰는게 좋음 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	
+	<!-- tx:advice -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="find*" read-only="true"/>
+			<tx:method name="*" rollback-for="Exception"/><!-- 스프링에서 관리하는 롤백은 런타임익셉션 -->
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+		<aop:pointcut expression="execution(public * kr.co.mingyeong.*.service.*.*(..))" id="servicePointcut"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointcut" />
+	</aop:config>
+		
+	
+	<!-- MyBatis FactoryBean, Template, 매퍼자동스캔 -->
+	<!-- 기존에 mybatis-config.xml파일에서 했던걸 스프링에서.... -->
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property><!-- 커넥션을 자기가 하는게 아니라 데이터소스를 이용 -->
+		<property name="configLocation" value="classpath:/mybatis-config.xml"  /><!-- 마이바티스 config파일을 활용하고 싶을때 -->
+		<property name="mapperLocations" value="classpath:mapper/*.xml" />
+	</bean>
+	
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactoryBean" />
+	</bean>	
+	
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="kr.co.mingyeong.*.mapper" />
+	</bean>	
+		
+</beans>

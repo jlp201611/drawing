@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+<settings>
+	<setting name="jdbcTypeForNull" value="NULL"/>
+</settings>
+<!--엘리어스를 썼는데 에러 뜨면 엘리어스 위치를 위에 놓으라는 오류일지도ㅋㅋ-->
+	<typeAliases>
+		<typeAlias alias="member" type="kr.co.mingyeong.member.model.Member" />
+		<typeAlias alias="memberSearch" type="kr.co.mingyeong.member.model.MemberSearch"/>
+	</typeAliases>
+  	
+</configuration>
