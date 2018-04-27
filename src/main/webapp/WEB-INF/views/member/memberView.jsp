@@ -5,6 +5,8 @@
 	<!-- 사이드 메뉴 -->
 	<jsp:include page="/include/sidebar.jsp"/>
 	
+<!-- Home Content -->
+<div id="content" class="site-content">	
     <div class="container">
         <div class="table-wrapper">
             <div class="table-title">
@@ -57,13 +59,14 @@
 				</div>            
 	        </form>              
 			<div class="clearfix">
-				<a href="/memberList">목록</a>
-				<a href="/memberEdit">수정</a>
-				<a href="/memberDelete" data-toggle="modal"  data-target="#myModal" >삭제</a>
+				<a href="/memberList" class="btn btn-default">목록</a>
+				<a href="/memberEdit" class="btn btn-default">수정</a>
+				<a href="/memberDelete" class="btn btn-default" data-toggle="modal"  data-target="#myModal" >삭제</a>
             </div>
         </div>
     </div>  
 
 	<jsp:include page="/include/close-function.jsp"/>
+	</div>
 </body>
 </html>                                		                            

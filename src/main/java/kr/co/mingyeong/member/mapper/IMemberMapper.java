@@ -32,4 +32,7 @@ public interface IMemberMapper {
 	
 	//접속일
 	public void loginAccess(String mem_id) throws Exception;
+	
+	//아이디체크
+	public int checkID(Member member) throws Exception;
 }

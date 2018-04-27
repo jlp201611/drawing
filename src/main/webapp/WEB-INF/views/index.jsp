@@ -7,6 +7,9 @@
 <!-- 사이드 메뉴 -->
 <jsp:include page="/include/sidebar.jsp" />
 
+
+<!-- Home Content -->
+<div id="content" class="site-content">
 	<div id="blog-wrapper">
 		<div class="blog-holder center-relative">
 
@@ -21,7 +24,7 @@
 						</div>
 						<div class="entry-date published">${loginInfo.mem_id}님환영합니다</div>
 						<h2 class="entry-title">
-							Slow and steady wins the race
+							<a class="montserrat" >Slow and steady wins the race</a>
 						</h2>
 
 						<div class="clear"></div>
@@ -33,16 +36,12 @@
 			<article id="post-2" class="blog-item-holder">
 				<div class="entry-content relative">
 					<div class="content-1170 center-relative">
-						<h2 class="entry-title">
-							<a href="single.html">Today Write <span class="read-more">
+						<div id="write_include"></div>
+						<h2 class="entry-title" >
+							<a id="write" data-toggle="modal" data-target="#myModal" >Today Write <span class="read-more">
 							</span></a>
+							<jsp:include page="/include/photoForm.jsp"/>
 						</h2>
-						<div class="cat-links">
-							<ul>
-								<li><a href="#">Science</a></li>
-							</ul>
-						</div>
-						<div class="entry-date published">February 12, 2016</div>
 						<div class="clear"></div>
 					</div>
 				</div>
@@ -53,14 +52,14 @@
 				<div class="entry-content relative">
 					<div class="content-1170 center-relative">
 						<h2 class="entry-title">
-							<a href="single.html">Everything is design</a>
+							<a href="/photoList">It’s all about experience</a>
 						</h2>
 						<div class="cat-links">
 							<ul>
-								<li><a href="#">Art</a></li>
+								<li><a href="#">3 St</a></li>
 							</ul>
 						</div>
-						<div class="entry-date published">February 12, 2016</div>
+						<div class="entry-date published">0000.00.00 ~ 0000.00.00</div>
 						<div class="clear"></div>
 					</div>
 				</div>
@@ -72,14 +71,14 @@
 				<div class="entry-content relative">
 					<div class="content-1170 center-relative">
 						<h2 class="entry-title">
-							<a href="single.html">It’s all about experience</a>
+							<a href="/photoList">This is not my code</a>
 						</h2>
 						<div class="cat-links">
 							<ul>
-								<li><a href="#">Life</a></li>
+								<li><a href="#">2 St</a></li>
 							</ul>
 						</div>
-						<div class="entry-date published">February 12, 2016</div>
+						<div class="entry-date published">0000.00.00 ~ 0000.00.00</div>
 						<div class="clear"></div>
 					</div>
 				</div>
@@ -91,33 +90,14 @@
 				<div class="entry-content relative">
 					<div class="content-1170 center-relative">
 						<h2 class="entry-title">
-							<a href="single.html">This is not my code</a>
+							<a href="/photoList">Support human activity</a>
 						</h2>
 						<div class="cat-links">
 							<ul>
-								<li><a href="#">Coding</a></li>
+								<li><a href="#">1 st</a></li>
 							</ul>
 						</div>
-						<div class="entry-date published">February 12, 2016</div>
-						<div class="clear"></div>
-					</div>
-				</div>
-			</article>
-
-
-
-			<article id="post-6" class="blog-item-holder">
-				<div class="entry-content relative">
-					<div class="content-1170 center-relative">
-						<h2 class="entry-title">
-							<a href="single.html">Support human activity</a>
-						</h2>
-						<div class="cat-links">
-							<ul>
-								<li><a href="#">Advocacy</a></li>
-							</ul>
-						</div>
-						<div class="entry-date published">February 12, 2016</div>
+						<div class="entry-date published">0000.00.00 ~ 0000.00.00</div>
 						<div class="clear"></div>
 					</div>
 				</div>
@@ -129,16 +109,14 @@
 	</div>
 
 	<div class="featured-image-holder">
-		<div class="featured-post-image"
-			style="background-image: url(demo-images/featured-image.jpg)"></div>
-
+		<div class="featured-post-image" style="background-image: url(demo-images/featured-image.jpg)"></div>
 	</div>
 	<div class="clear"></div>
 </div>
 
 
 	<jsp:include page="/include/close-function.jsp"/>
-	
+
 </body>
 
 </html>

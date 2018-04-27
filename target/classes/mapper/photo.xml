@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.mingyeong.photo.mapper.IPhotoMapper"><!--다오에서 네임 스페이스를 통해서 member.xml로 찾아온다-->
+
+	<resultMap id="getBoardListResult" type="HashMap">
+		<result property="PT_TITLE" column="pt_title" />
+		<result property="ATCH_REF_NO" column="atch_ref_no" />
+		<result property="PT_CONTENT" column="pt_content" jdbcType="CLOB" javaType="java.lang.String" />
+		<result property="PT_IP" column="pt_ip" />
+		<result property="PT_READ_CNT" column="pt_read_cnt" />
+		<result property="PT_REG_DATE" column="pt_reg_date" />
+		<result property="ATCH_ID" column="atch_id" />
+	</resultMap>
+
+	<!-- 리스트 -->
+	<select id="getPhotoList" parameterType="hashMap" resultMap="getBoardListResult">
+		SELECT
+		    pt_title,
+		    atch_ref_no,
+		    pt_content,
+		    pt_ip,
+		    pt_read_cnt,
+		    to_char(pt_reg_date, 'YYYY/MM/DD') as pt_reg_date,
+            b.atch_id          
+		FROM
+		    tb_lmk_photo a left outer join tb_lmk_attach b
+            on(a.pt_no = b.ATCH_REF_NO and b.ATCH_PHOTO_REP = 'Y')
+        where PT_MEM_ID = #{mem_id}
+        order by b.atch_id DESC
+	</select>
+	
+	<insert id="insertPhoto" parameterType="hashMap">
+		<selectKey keyProperty="pt_no" order="BEFORE" resultType="int">
+			SELECT seq_photo.nextval from dual
+		</selectKey>
+		INSERT INTO tb_lmk_photo (
+		    pt_no,
+		    pt_title,
+		    pt_mem_id,
+		    pt_content,
+		    pt_ip,
+		    pt_read_cnt,
+		    pt_reg_date,
+		    pt_mod_date
+		) VALUES (
+		    #{pt_no},
+		    #{pt_title},
+		    #{pt_mem_id},
+		    #{pt_content},
+		    #{pt_ip},
+		    0,
+		    sysdate,
+		    sysdate
+		)	
+	</insert>
+	
+	
+	
+</mapper>
+

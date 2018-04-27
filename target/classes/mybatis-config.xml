@@ -12,6 +12,7 @@
 	<typeAliases>
 		<typeAlias alias="member" type="kr.co.mingyeong.member.model.Member" />
 		<typeAlias alias="memberSearch" type="kr.co.mingyeong.member.model.MemberSearch"/>
+		<typeAlias alias="attach" type="kr.co.mingyeong.attach.vo.Attach"/>
 	</typeAliases>
   	
 </configuration>

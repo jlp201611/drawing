@@ -7,9 +7,9 @@ body
 {
     font-family: 'Libre Baskerville',sans-serif, Arial;;
     font-size: 18px; 	
-    line-height: 35px;
+/*     line-height: 35px; */
     font-weight: 400;	
-    letter-spacing: -1px;
+    /* letter-spacing: -1px; */
     color: #404040;
     background-color: #fff;
 }
@@ -307,7 +307,7 @@ input, textarea, select
 
 #toggle
 {
-    height: 100px;
+    height: 60px;
     padding: 20px 0;
     position: relative;
     background-color: #333333;
@@ -468,7 +468,7 @@ body.open .site-content
 
 .blog-item-holder .entry-content .entry-title
 {
-    font-family: 'Montserrat', sans-serif, Arial;
+  /*   font-family: 'Montserrat', sans-serif, Arial; */
     font-size: 30px;
     line-height: 30px;
     padding-top: 35px;
@@ -576,7 +576,7 @@ body.open .site-content
     font-size: 14px;
     text-transform: uppercase;
     font-weight: 700;
-    color: #aabdbd;
+    color: #7A7A7A;
 }
 
 .published:before
@@ -636,7 +636,7 @@ body.open .site-content
 .cbp-bislideshow.scroll li
 {
     opacity: 1 !important;
-    width: 45%;
+    width: 40%;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -660,7 +660,8 @@ body.open .site-content
     top: 0;
     left: 0;
     height: 100%;
-    background: #fff;
+    background: rgba(255,255,255,0.6);
+/*     background: #fff; */
     padding: 50px;
     max-width: 600px;
     z-index: 1;
@@ -689,7 +690,7 @@ body.open .site-content
     max-width: 540px;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 10%;
+/*     padding-left: 10%; */
     padding-right: 10%;
 }
 
@@ -708,7 +709,7 @@ body.open .site-content
 
 .full-screen-scroll h2.entry-title 
 {
-    margin-top: 160px;
+    margin-top: 100px;
 }
 
 

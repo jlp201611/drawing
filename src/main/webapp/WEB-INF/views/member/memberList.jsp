@@ -4,6 +4,8 @@
 <html>
 	<!-- 사이드 메뉴 html 및 스타일 시트-->
 	<jsp:include page="/include/sidebar.jsp"/>
+<!-- Home Content -->
+<div id="content" class="site-content">	
     <div class="container">
         <div class="table-wrapper">
             <div class="table-title">
@@ -11,14 +13,20 @@
                     <div class="col-sm-5">
 						<h2>User <b>Management</b></h2>
 					</div>
-                </div>
+					<div class="col-sm-7">
+						<div class="search-holder">
+	                    		<form action="/memberList" method="post"  class="form-lnline" >
+                    				<button class="btn pull-right" type="submit" class="btn">검색</button>
+	                    			<label class="pull-right">
+		                        		<input name="searchWord"  type="search" class="search-field" placeholder="ID here to search..." value="" title="Search for:">
+	                    			</label>
 
-            </div>
-            <div class="row">
-            	<form action="/memberList" method="post">
-            	아이디검색 : <input type="text" name="searchWord" /><button type="submit">검색</button>
-            	</form>
-            </div>            
+	                    		</form>
+                    		
+                		</div>
+               		</div>
+                </div>
+            </div>           
             <table class="table table-striped table-hover">
             	<colgroup>
             		<col width="60px">
@@ -130,6 +138,7 @@
         </div>
     </div>
     <!-- 사이드메뉴 스크립트 및 로딩클로즈 --> 
-    <jsp:include page="/include/close-function.jsp"/>   
+    <jsp:include page="/include/close-function.jsp"/>  
+  	</div>
 </body>                     		                            
 </html>

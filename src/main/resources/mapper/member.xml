@@ -106,5 +106,15 @@
 		)	
 	
 	</insert>
+	
+	<!-- 아이디체크 -->
+	<select id="checkID" parameterType="member" resultType="int">
+		SELECT
+		    count(*)
+		FROM
+		    tb_lmk_member
+		WHERE
+			mem_id = #{mem_id}
+	</select>
 </mapper>
 

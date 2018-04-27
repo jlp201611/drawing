@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.mingyeong.attach.mapper.IAttachMapper">
+
+	<!--첨부파일 등록-->
+	<insert id="insertAttach" parameterType="attach">
+		INSERT INTO tb_lmk_attach (
+		    atch_id,
+		    atch_ref_no,
+		    atch_divsion,
+		    atch_save_path,
+		    atch_save_name,
+		    atch_orig_name,
+		    atch_file_size,
+		    atch_fancy_size,
+		    atch_content_type,
+		    atch_down_cnt,
+		    atch_reg_date,
+		    atch_photo_rep,
+		    atch_mem_id
+		) VALUES (
+		    seq_attach.nextval,
+		    #{atch_ref_no},
+		    #{atch_divsion},
+		    #{atch_save_path},
+		    #{atch_save_name},
+		    #{atch_orig_name},
+		    #{atch_file_size},
+		    #{atch_fancy_size},
+		    #{atch_content_type},
+		    0,
+		    sysdate,
+		    #{atch_photo_rep},
+		    #{atch_mem_id}
+		)
+	</insert>
+	
+	<select id="getAttach" resultType="attach" parameterType="int">
+		SELECT
+		    atch_save_path,
+		    atch_save_name
+		FROM
+		    tb_lmk_attach
+	   WHERE atch_id =#{aaa}
+	   order by atch_id desc
+	</select>
+	
+	
+	
+
+
+	
+</mapper>

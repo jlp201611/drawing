@@ -63,6 +63,13 @@ public class MemberServiceImpl implements IMemberService {
 		mapper.insertMember(params);
 		
 	}
+
+	@Override
+	public int checkID(Member member) throws Exception {
+		int result = mapper.checkID(member);
+		log.debug("아이디체크< = {}", result);
+		return result;
+	}
 	
 
 	

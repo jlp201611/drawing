@@ -25,4 +25,7 @@ public interface IMemberService {
 	//회원가입
 	public void insertMember(Member member) throws Exception;
 	
+	//아이디체크
+	public int checkID(Member member) throws Exception;
+	
 }
