@@ -24,12 +24,13 @@
 						<textarea id="summernote" name="pt_content" class="form-control"></textarea>
 						<script>
 							$(document).ready(function() {
+								
 								$('#summernote').summernote({
 									  height: 120,
 									  toolbar: false,
-									  background-color:none,
 									  disableResizeEditor: true
 									});
+								$('#summernote').summernote('backColor', 'transparent');
 							});
 						</script>
 					</div>

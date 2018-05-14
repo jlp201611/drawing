@@ -65,8 +65,8 @@ public class MemberServiceImpl implements IMemberService {
 	}
 
 	@Override
-	public int checkID(Member member) throws Exception {
-		int result = mapper.checkID(member);
+	public int checkID(HashMap<String, Object> params) throws Exception {
+		int result = mapper.checkID(params);
 		log.debug("아이디체크< = {}", result);
 		return result;
 	}

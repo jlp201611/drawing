@@ -145,7 +145,6 @@ public class PhotoController {
 			e.printStackTrace();
 			RedirectView rev = new RedirectView();
 			rev.setUrl("/");
-
 			modelAndView.setView(rev);
 		}
 

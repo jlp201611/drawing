@@ -1,5 +1,6 @@
 package kr.co.mingyeong.member.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import kr.co.mingyeong.member.model.Member;
@@ -26,6 +27,6 @@ public interface IMemberService {
 	public void insertMember(Member member) throws Exception;
 	
 	//아이디체크
-	public int checkID(Member member) throws Exception;
+	public int checkID(HashMap<String, Object> params) throws Exception;
 	
 }

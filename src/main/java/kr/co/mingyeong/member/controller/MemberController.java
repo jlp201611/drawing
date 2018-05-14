@@ -10,10 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -135,60 +137,57 @@ public class MemberController {
 
 	// 회원가입
 	@RequestMapping(value = "/joinProc", method = RequestMethod.POST)
-	public ModelAndView insertMember(ModelAndView modelAndView, Member member) {
+	@ResponseBody
+	public HashMap<String, Object>  insertMember(@RequestBody Member member, HttpServletRequest req) {
 		log.debug("join =>{}", member.toString());
-		RedirectView rdv = new RedirectView();
+		HashMap<String, Object> result = new HashMap<>();
+		
 		try {
-			int checkId = service.checkID(member);
-			if(checkId>=1) {
-				rdv.setUrl("/join");
-				modelAndView.addObject("checkID","아이디가 중복되었습니다.");
-				modelAndView.setView(rdv);
-			}else {
-				service.insertMember(member);
-				rdv.setUrl("/login");
-				modelAndView.setView(rdv);
-			}
+			service.insertMember(member);
+			result.put("checkID",true);
+			result.put("message","아이디가 장상 등록 완료.");
 		} catch (Exception e) {
 			// TODO 회원가입 익셉션
+			result.put("checkID",false);
+			result.put("message",e.getMessage());
 			e.printStackTrace();
-			rdv.setUrl("/join");
-			modelAndView.setView(rdv);
 		}
-		return modelAndView;
-
+		return result;
 	}
 
-	// 아이디 중복체크
-	
-	@RequestMapping(value = "/checkID", method = RequestMethod.POST) // 리스폰스 해더에 Content-Type를 html/text가 아니라json으로
-	public @ResponseBody String checkID(
-			
-			Member member, Model model) throws Exception {
+	// 아이디 체크
+	@RequestMapping(value = "/checkId", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object>  checkId(@RequestBody HashMap<String, Object> params, Model model) {
 		
-		log.debug("dd => {}", model);
-		log.debug("member => {}", member.toString());
-		ObjectMapper mapper = new ObjectMapper();
-		Map<String, Object> map = new HashMap<>();
+		log.debug("params =>{}", params.get("mem_id"));
+		log.debug("params1 =>{}", params);
+		log.debug("model =>{}", model);
+		//log.debug("req =>{}", req.getParameter("mem_id"));
+//		RedirectView rdv = new RedirectView();
+		HashMap<String, Object> result = new HashMap<>();
+		
 		try {
-			int result = service.checkID(member);
+			int checkId = service.checkID(params);
+			if(checkId>=1) {
 
-			if (result >= 1 ? false : true) { // 아이디 중복
-				map.put("result", true);
-				map.put("message", "사용가능한 아이디 입니다.");
-			} else { // 가입 가능 아이디
-				map.put("result", false);
-				map.put("message", "중복된 아이디 입니다");
+				result.put("checkID",false);
+				result.put("message","아이디가 중복되었습니다.");
+				result.put("member",params);
+			}else {
+				result.put("checkID",true);
+				result.put("message","사용가능한 ID입니다");
 			}
-
-		} catch (Throwable e) {
-			map.put("result", false);
-			map.put("message", "중복체크 익셉션 발생" + e.getMessage());
+		} catch (Exception e) {
+			// TODO 아이디 체크 익셉션
+			result.put("checkID",false);
+			result.put("message",e.getMessage());
+			e.printStackTrace();
 		}
-		return mapper.writeValueAsString(map);
-
-	}
-
+		return result;
+	}	
+	
+	
 	// 회원리스트
 	@RequestMapping("/memberList")
 	public ModelAndView memberList(ModelAndView modelAndView, @ModelAttribute("search") MemberSearch memberSearch,

@@ -1,5 +1,6 @@
 package kr.co.mingyeong.member.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -34,5 +35,5 @@ public interface IMemberMapper {
 	public void loginAccess(String mem_id) throws Exception;
 	
 	//아이디체크
-	public int checkID(Member member) throws Exception;
+	public int checkID(HashMap<String, Object> params) throws Exception;
 }
